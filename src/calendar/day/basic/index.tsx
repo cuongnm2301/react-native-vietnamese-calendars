@@ -1,11 +1,11 @@
-import React, {Fragment, useCallback, useRef} from 'react';
+import React, {Fragment, useCallback, useMemo, useRef} from 'react';
 import {TouchableOpacity, Text, View, ViewProps} from 'react-native';
 
 import {xdateToData} from '../../../interface';
 import {Theme, DayState, MarkingTypes, DateData} from '../../../types';
 import styleConstructor from './style';
 import Marking, {MarkingProps} from '../marking';
-
+import DateUtil from '../../../utils/date';
 
 export interface BasicDayProps extends ViewProps {
   state?: DayState;
@@ -58,7 +58,6 @@ const BasicDay = (props: BasicDayProps) => {
   const isMultiPeriod = markingType === Marking.markings.MULTI_PERIOD;
   const isCustom = markingType === Marking.markings.CUSTOM;
   const dateData = date ? xdateToData(date) : undefined;
-
   const shouldDisableTouchEvent = () => {
     const {disableTouchEvent} = _marking;
     let disableTouch = false;
@@ -72,6 +71,14 @@ const BasicDay = (props: BasicDayProps) => {
     }
     return disableTouch;
   };
+
+  const luneDate = useMemo(() => {
+    if (dateData) {
+      const {day, month, year} = dateData;
+      return DateUtil.convertSolar2Lunar(day, month, year);
+    }
+    return undefined;
+  }, []);
 
   const getContainerStyle = () => {
     const {customStyles, selectedColor} = _marking;
@@ -132,7 +139,6 @@ const BasicDay = (props: BasicDayProps) => {
 
   const renderMarking = () => {
     const {marked, dotColor, dots, periods} = _marking;
-
     return (
       <Marking
         type={markingType}
@@ -157,10 +163,43 @@ const BasicDay = (props: BasicDayProps) => {
     );
   };
 
+  const renderLunaDate = () => {
+    const style = getTextStyle();
+    const lunaDay = luneDate?.[0] || undefined;
+    return lunaDay ? (
+      <View>
+        <Text allowFontScaling={false} style={[style, {fontSize: 10}]}>
+          {lunaDay.toString()}
+        </Text>
+        <View
+          style={{
+            width: 6,
+            height: 6,
+            borderRadius: 6,
+            backgroundColor: lunaDay % 3 === 0 ? '#CF221A' : '#808080',
+            position: 'absolute',
+            bottom: 0,
+            left: 18
+          }}
+        />
+      </View>
+    ) : null;
+  };
+
+  const renderFullDate = () => {
+    return (
+      <Fragment>
+        {renderText()}
+        {renderLunaDate()}
+      </Fragment>
+    );
+  };
+
   const renderContent = () => {
     return (
       <Fragment>
         {renderText()}
+        {renderLunaDate()}
         {renderMarking()}
       </Fragment>
     );
@@ -181,7 +220,7 @@ const BasicDay = (props: BasicDayProps) => {
         accessibilityRole={isDisabled ? undefined : 'button'}
         accessibilityLabel={accessibilityLabel}
       >
-        {isMultiPeriod ? renderText() : renderContent()}
+        {isMultiPeriod ? renderFullDate() : renderContent()}
       </TouchableOpacity>
     );
   };
