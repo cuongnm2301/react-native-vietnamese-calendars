@@ -4,7 +4,7 @@ const {toMarkingFormat} = require('./interface');
 const latinNumbersPattern = /[0-9]/g;
 
 function isValidXDate(date: any) {
-  return date && (date instanceof XDate);
+  return date && date instanceof XDate;
 }
 
 export function sameMonth(a?: XDate, b?: XDate) {
@@ -20,7 +20,7 @@ export function sameDate(a?: XDate, b?: XDate) {
     return false;
   } else {
     return a?.getFullYear() === b?.getFullYear() && a?.getMonth() === b?.getMonth() && a?.getDate() === b?.getDate();
-  } 
+  }
 }
 
 export function sameWeek(a: string, b: string, firstDayOfWeek: number) {
@@ -78,7 +78,8 @@ function fromTo(a: XDate, b: XDate): XDate[] {
   return days;
 }
 
-export function month(date: XDate) { // exported for tests only
+export function month(date: XDate) {
+  // exported for tests only
   const year = date.getFullYear(),
     month = date.getMonth();
   const days = new XDate(year, month + 1, 0).getDate();
@@ -191,6 +192,39 @@ export function generateDay(originDate: string | XDate, daysOffset = 0) {
   return toMarkingFormat(baseDate.clone().addDays(daysOffset));
 }
 
+const viLocate = {
+  monthNames: [
+    'Tháng 1',
+    'Tháng 2',
+    'Tháng 3',
+    'Tháng 4',
+    'Tháng 5',
+    'Tháng 6',
+    'Tháng 7',
+    'Tháng 8',
+    'Tháng 9',
+    'Tháng 10',
+    'Tháng 11',
+    'Tháng 12'
+  ],
+  monthNamesShort: [
+    'Thg 1',
+    'Thg 2',
+    'Thg 3',
+    'Thg 4',
+    'Thg 5',
+    'Thg 6',
+    'Thg 7',
+    'Thg 8',
+    'Thg 9',
+    'Thg 10',
+    'Thg 11',
+    'Thg 12'
+  ],
+  dayNames: ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ nhật'],
+  dayNamesShort: ['CN', 'Hai', 'Ba', 'Tư', 'Năm', 'Sáu', 'Bảy']
+};
+
 export function getLocale() {
-  return XDate.locales[XDate.defaultLocale];
+  return {...XDate.locales[XDate.defaultLocale], ...viLocate};
 }

@@ -6,9 +6,9 @@ export default function getStyle(theme: Theme = {}) {
   const appStyle = {...defaultStyle, ...theme};
   return StyleSheet.create({
     container: {
-      paddingLeft: 5,
-      paddingRight: 5,
-      backgroundColor: appStyle.calendarBackground
+      backgroundColor: appStyle.calendarBackground,
+      borderBottomWidth: 1,
+      borderColor: '#E3E3E3'
     },
     dayContainer: {
       flex: 1,
@@ -21,7 +21,7 @@ export default function getStyle(theme: Theme = {}) {
       backgroundColor: appStyle.calendarBackground
     },
     week: {
-      marginVertical: appStyle.weekVerticalMargin,
+      // marginVertical: appStyle.weekVerticalMargin,
       flexDirection: 'row',
       justifyContent: 'space-around'
     },

@@ -1,7 +1,9 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 import * as defaultStyle from '../../../style';
 import {Theme} from '../../../types';
 import constants from '../../../commons/constants';
+
+const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function styleConstructor(theme: Theme = {}) {
   const appStyle = {...defaultStyle, ...theme};
@@ -11,9 +13,14 @@ export default function styleConstructor(theme: Theme = {}) {
       alignItems: 'center'
     },
     base: {
-      width: 32,
-      height: 32,
-      alignItems: 'center'
+      width: SCREEN_WIDTH / 7,
+      height: SCREEN_WIDTH / 7,
+      alignItems: 'center',
+      borderWidth: 1,
+      borderBottomWidth: 0,
+      borderTopWidth: 0,
+      borderLeftWidth: 0,
+      borderColor: '#E3E3E3'
     },
     text: {
       marginTop: constants.isAndroid ? 4 : 6,
@@ -28,12 +35,10 @@ export default function styleConstructor(theme: Theme = {}) {
       marginTop: constants.isAndroid ? 4 : 6
     },
     selected: {
-      backgroundColor: appStyle.selectedDayBackgroundColor,
-      borderRadius: 16
+      backgroundColor: appStyle.selectedDayBackgroundColor
     },
     today: {
-      backgroundColor: appStyle.todayBackgroundColor,
-      borderRadius: 16
+      backgroundColor: appStyle.todayBackgroundColor
     },
     todayText: {
       color: appStyle.todayTextColor

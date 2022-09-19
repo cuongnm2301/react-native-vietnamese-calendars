@@ -7,7 +7,6 @@ const AGENDA_TEXT_COLOR = '#7a92a5';
 const AGENDA_BG_COLOR = '#f2F4f5';
 const DISABLED_COLOR = '#d9e1e8';
 
-
 export const textDayFontFamily = 'System';
 export const textMonthFontFamily = 'System';
 export const textDayHeaderFontFamily = 'System';
@@ -18,7 +17,7 @@ export const textMonthFontWeight = '300';
 export const textDayHeaderFontWeight = undefined;
 export const todayButtonFontWeight = '600';
 
-export const textDayFontSize = 16;
+export const textDayFontSize = 14;
 export const textMonthFontSize = 16;
 export const textDayHeaderFontSize = 13;
 export const todayButtonFontSize = 14;
