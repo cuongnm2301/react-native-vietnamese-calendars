@@ -1,6 +1,6 @@
 {
   "name": "react-native-vietnamese-calendars",
-  "version": "0.0.1",
+  "version": "0.0.7",
   "main": "src/index.ts",
   "types": "src/index.d.ts",
   "description": "React Native Calendar Components",
