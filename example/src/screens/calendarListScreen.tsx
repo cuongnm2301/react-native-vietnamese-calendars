@@ -5,8 +5,6 @@ import testIDs from '../testIDs';
 
 const RANGE = 24;
 const initialDate = '2022-09-18';
-const nextWeekDate = '2022-07-14';
-const nextMonthDate = '2022-08-05';
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 interface Props {
@@ -79,6 +77,10 @@ const CalendarListScreen = (props: Props) => {
       pagingEnabled={true}
       staticHeader={true}
       firstDay={1}
+      fortuneDates={{
+        '22-09-2022': 'good',
+        '23-09-2022': 'bad'
+      }}
     />
   );
 };

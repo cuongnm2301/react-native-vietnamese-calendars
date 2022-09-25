@@ -1,5 +1,5 @@
 import React, {Fragment, useCallback, useMemo, useRef} from 'react';
-import {TouchableOpacity, Text, View, ViewProps} from 'react-native';
+import {TouchableOpacity, Text, View, ViewProps, StyleSheet} from 'react-native';
 
 import {xdateToData} from '../../../interface';
 import {Theme, DayState, MarkingTypes, DateData} from '../../../types';
@@ -31,6 +31,8 @@ export interface BasicDayProps extends ViewProps {
   testID?: string;
   /** Accessibility label */
   accessibilityLabel?: string;
+  /** Fortune date label */
+  fortuneDate?: 'good' | 'bad';
 }
 
 const BasicDay = (props: BasicDayProps) => {
@@ -46,7 +48,8 @@ const BasicDay = (props: BasicDayProps) => {
     disableAllTouchEventsForInactiveDays,
     accessibilityLabel,
     children,
-    testID
+    testID,
+    fortuneDate
   } = props;
   const style = useRef(styleConstructor(theme));
   const _marking = marking || {};
@@ -166,21 +169,20 @@ const BasicDay = (props: BasicDayProps) => {
   const renderLunaDate = () => {
     const style = getTextStyle();
     const lunaDay = luneDate?.[0] || undefined;
+    const backgroundColorFortuneDate = fortuneDate === 'good' ? '#CF221A' : '#808080';
+    const backgroundColor = fortuneDate ? backgroundColorFortuneDate : undefined;
     return lunaDay ? (
       <View>
-        <Text allowFontScaling={false} style={[style, {fontSize: 10}]}>
+        <Text allowFontScaling={false} style={[style, extraDateStyle.extraLunaTextFont]}>
           {lunaDay.toString()}
         </Text>
         <View
-          style={{
-            width: 6,
-            height: 6,
-            borderRadius: 6,
-            backgroundColor: lunaDay % 3 === 0 ? '#CF221A' : '#808080',
-            position: 'absolute',
-            bottom: 0,
-            left: 18
-          }}
+          style={[
+            extraDateStyle.fortuneDate,
+            {
+              backgroundColor
+            }
+          ]}
         />
       </View>
     ) : null;
@@ -236,6 +238,20 @@ const BasicDay = (props: BasicDayProps) => {
 
   return isMultiPeriod ? renderPeriodsContainer() : renderContainer();
 };
+
+const extraDateStyle = StyleSheet.create({
+  fortuneDate: {
+    width: 6,
+    height: 6,
+    borderRadius: 6,
+    position: 'absolute',
+    bottom: 0,
+    left: 18
+  },
+  extraLunaTextFont: {
+    fontSize: 10
+  }
+});
 
 export default BasicDay;
 BasicDay.displayName = 'BasicDay';

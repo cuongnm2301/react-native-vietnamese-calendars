@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import XDate from 'xdate';
 
 import React, {useRef, useState, useEffect, useCallback, useMemo} from 'react';
-import {View, ViewStyle, StyleProp} from 'react-native';
+import {View, ViewStyle, StyleProp, StyleSheet} from 'react-native';
 // @ts-expect-error
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
@@ -65,6 +65,8 @@ export interface CalendarProps extends CalendarHeaderProps, DayProps {
   customHeader?: any;
   /** Allow selection of dates before minDate or after maxDate */
   allowSelectionOutOfRange?: boolean;
+  /** Map of fortune dates */
+  fortuneDates?: Record<string, 'good' | 'bad'>;
 }
 
 /**
@@ -96,6 +98,7 @@ const Calendar = (props: CalendarProps) => {
     accessibilityElementsHidden,
     importantForAccessibility,
     testID,
+    fortuneDates,
     style: propsStyle
   } = props;
   const [currentMonth, setCurrentMonth] = useState(
@@ -215,6 +218,7 @@ const Calendar = (props: CalendarProps) => {
 
   const renderDay = (day: XDate, id: number) => {
     const dayProps = extractDayProps(props);
+    const fortuneDate = fortuneDates && fortuneDates[`${day.toString('dd-MM-yyyy')}`];
 
     if (!sameMonth(day, currentMonth) && hideExtraDays) {
       return <View key={id} style={style.current.emptyDayContainer} />;
@@ -229,6 +233,7 @@ const Calendar = (props: CalendarProps) => {
           marking={markedDates?.[toMarkingFormat(day)]}
           onPress={onPressDay}
           onLongPress={onLongPressDay}
+          fortuneDate={fortuneDate}
         />
       </View>
     );
@@ -245,7 +250,7 @@ const Calendar = (props: CalendarProps) => {
       week.unshift(renderWeekNumber(days[days.length - 1].getWeek()));
     }
     return (
-      <View style={[style.current.week, {borderLeftWidth: 1, borderColor: '#E3E3E3', borderTopWidth: 1}]} key={id}>
+      <View style={[style.current.week, extraFixedStyle.weekExtraStyle]} key={id}>
         {week}
       </View>
     );
@@ -312,6 +317,10 @@ const Calendar = (props: CalendarProps) => {
   );
 };
 
+const extraFixedStyle = StyleSheet.create({
+  weekExtraStyle: {borderLeftWidth: 1, borderColor: '#E3E3E3', borderTopWidth: 1}
+});
+
 export default Calendar;
 Calendar.displayName = 'Calendar';
 Calendar.propTypes = {
@@ -338,5 +347,6 @@ Calendar.propTypes = {
   disabledByDefault: PropTypes.bool,
   headerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number, PropTypes.array]),
   customHeader: PropTypes.any,
-  allowSelectionOutOfRange: PropTypes.bool
+  allowSelectionOutOfRange: PropTypes.bool,
+  fortuneDates: PropTypes.object
 };
