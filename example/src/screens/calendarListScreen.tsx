@@ -87,25 +87,38 @@ const CalendarListScreen = (props: Props) => {
 
 const theme = {
   selectedDayBackgroundColor: 'rgba(227, 47, 39, 0.15)',
-  selectedDayTextColor: '#E32F27'
+  selectedDayTextColor: '#E32F27',
+  arrowColor: '#222B45',
+  textSectionTitleColor: '#55555B',
+  todayBackgroundColor: 'rgba(227, 47, 39, 0.15)',
+  todayTextColor: '#E32F27',
+  'stylesheet.calendar.header': {
+    arrow: {
+      borderWidth: 1,
+      borderColor: 'rgba(206, 211, 222, 0.5)',
+      paddingHorizontal: 12,
+      paddingVertical: 8,
+      borderRadius: 6
+    },
+    week: {
+      backgroundColor: '#E3E3E3',
+      marginTop: 7,
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      paddingTop: 4
+    }
+  }
 };
 
 function renderCustomHeader(date: any) {
-  const header = date.toString('MMMM yyyy');
-  const [month, year] = header.split(' ');
-  const textStyle: TextStyle = {
-    fontSize: 18,
-    fontWeight: 'bold',
-    paddingTop: 10,
-    paddingBottom: 10,
-    color: '#5E60CE',
-    paddingRight: 5
-  };
+  const header = date.toString('MMMM/yyyy');
+  const [month, year] = header.split('/');
 
   return (
     <View style={styles.header}>
-      <Text style={[styles.month, textStyle]}>{`${month}`}</Text>
-      <Text style={[styles.year, textStyle]}>{year}</Text>
+      <Text style={styles.month}>{`${month}`}</Text>
+      <Text style={styles.year}>{year}</Text>
     </View>
   );
 }
@@ -114,16 +127,16 @@ export default CalendarListScreen;
 
 const styles = StyleSheet.create({
   header: {
-    flexDirection: 'row',
-    width: '100%',
-    justifyContent: 'space-between',
-    marginTop: 10,
-    marginBottom: 10
+    alignItems: 'center'
   },
   month: {
-    marginLeft: 5
+    fontSize: 20,
+    fontWeight: '400',
+    color: '#222B45'
   },
   year: {
-    marginRight: 5
+    marginRight: 5,
+    fontSize: 12,
+    fontWeight: '400'
   }
 });

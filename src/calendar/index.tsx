@@ -127,6 +127,7 @@ const Calendar = (props: CalendarProps) => {
       }
       setCurrentMonth(newMonth);
     },
+
     [currentMonth]
   );
 
@@ -135,6 +136,7 @@ const Calendar = (props: CalendarProps) => {
       const newMonth = currentMonth.clone().addMonths(count, true);
       updateMonth(newMonth);
     },
+
     [currentMonth, updateMonth]
   );
 
