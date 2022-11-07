@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import XDate from 'xdate';
 
 import React, {useRef, useState, useEffect, useCallback, useMemo} from 'react';
-import {View, ViewStyle, StyleProp, StyleSheet} from 'react-native';
+import {View, ViewStyle, StyleProp} from 'react-native';
 // @ts-expect-error
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 
@@ -252,7 +252,7 @@ const Calendar = (props: CalendarProps) => {
       week.unshift(renderWeekNumber(days[days.length - 1].getWeek()));
     }
     return (
-      <View style={[style.current.week, extraFixedStyle.weekExtraStyle]} key={id}>
+      <View style={[style.current.week]} key={id}>
         {week}
       </View>
     );
@@ -319,11 +319,8 @@ const Calendar = (props: CalendarProps) => {
   );
 };
 
-const extraFixedStyle = StyleSheet.create({
-  weekExtraStyle: {borderLeftWidth: 1, borderColor: '#E3E3E3', borderTopWidth: 1}
-});
-
 export default Calendar;
+
 Calendar.displayName = 'Calendar';
 Calendar.propTypes = {
   ...CalendarHeader.propTypes,
