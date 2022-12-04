@@ -1,6 +1,6 @@
 import React, {useRef, useCallback} from 'react';
 import {StyleSheet} from 'react-native';
-import {ExpandableCalendar, AgendaList, CalendarProvider, WeekCalendar} from 'react-native-calendars';
+import {ExpandableCalendar, AgendaList, CalendarProvider, WeekCalendar} from 'react-native-vietnamese-calendars';
 import testIDs from '../testIDs';
 import {agendaItems, getMarkedDates} from '../mocks/agendaItems';
 import AgendaItem from '../mocks/AgendaItem';
@@ -31,7 +31,7 @@ const ExpandableCalendarScreen = (props: Props) => {
   // }, []);
 
   const renderItem = useCallback(({item}: any) => {
-    return <AgendaItem item={item}/>;
+    return <AgendaItem item={item} />;
   }, []);
 
   return (
@@ -45,7 +45,7 @@ const ExpandableCalendarScreen = (props: Props) => {
       // todayBottomMargin={16}
     >
       {weekView ? (
-        <WeekCalendar testID={testIDs.weekCalendar.CONTAINER} firstDay={1} markedDates={marked.current}/>
+        <WeekCalendar testID={testIDs.weekCalendar.CONTAINER} firstDay={1} markedDates={marked.current} />
       ) : (
         <ExpandableCalendar
           testID={testIDs.expandableCalendar.CONTAINER}

@@ -11,7 +11,7 @@ import {
   CalendarProvider,
   TimelineProps,
   CalendarUtils
-} from 'react-native-calendars';
+} from 'react-native-vietnamese-calendars';
 
 import {timelineEvents, getDate} from '../mocks/timelineEvents';
 
@@ -110,9 +110,12 @@ export default class TimelineCalendarScreen extends Component {
     // scrollToFirst: true,
     // start: 0,
     // end: 24,
-    unavailableHours: [{start: 0, end: 6}, {start: 22, end: 24}],
+    unavailableHours: [
+      {start: 0, end: 6},
+      {start: 22, end: 24}
+    ],
     overlapEventsSpacing: 8,
-    rightEdgeSpacing: 24,
+    rightEdgeSpacing: 24
   };
 
   render() {

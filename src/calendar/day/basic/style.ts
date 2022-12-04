@@ -13,23 +13,21 @@ export default function styleConstructor(theme: Theme = {}) {
       alignItems: 'center'
     },
     base: {
-      width: SCREEN_WIDTH / 7,
+      width: SCREEN_WIDTH / 7 - 5,
       height: SCREEN_WIDTH / 7,
-      alignItems: 'center',
-      borderWidth: 1,
-      borderBottomWidth: 0,
-      borderTopWidth: 0,
-      borderLeftWidth: 0,
-      borderColor: '#E3E3E3'
+      alignItems: 'center'
     },
     text: {
-      marginTop: constants.isAndroid ? 4 : 6,
+      marginTop: SCREEN_WIDTH / 7 / 4,
       fontSize: appStyle.textDayFontSize,
       fontFamily: appStyle.textDayFontFamily,
       fontWeight: appStyle.textDayFontWeight,
       color: appStyle.dayTextColor,
       backgroundColor: 'rgba(255, 255, 255, 0)',
       ...appStyle.textDayStyle
+    },
+    lunarText: {
+      fontSize: 12
     },
     alignedText: {
       marginTop: constants.isAndroid ? 4 : 6

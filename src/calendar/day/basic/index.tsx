@@ -132,6 +132,10 @@ const BasicDay = (props: BasicDayProps) => {
     return styles;
   };
 
+  const getLunarTextStyle = () => {
+    return style.current.lunarText;
+  };
+
   const _onPress = useCallback(() => {
     onPress?.(dateData);
   }, [onPress, date]);
@@ -169,23 +173,30 @@ const BasicDay = (props: BasicDayProps) => {
   const renderLunaDate = () => {
     const style = getTextStyle();
     const lunaDay = luneDate?.[0] || undefined;
-    const backgroundColorFortuneDate = fortuneDate === 'good' ? '#CF221A' : '#808080';
-    const backgroundColor = fortuneDate ? backgroundColorFortuneDate : undefined;
+    const lunaMonth = luneDate?.[1] || undefined;
+
     return lunaDay ? (
-      <View>
-        <Text allowFontScaling={false} style={[style, extraDateStyle.extraLunaTextFont]}>
-          {lunaDay.toString()}
+      <View style={{position: 'absolute', bottom: 2}}>
+        <Text allowFontScaling={false} style={[style, extraDateStyle.extraLunaTextFont, getLunarTextStyle()]}>
+          {`${lunaDay.toString()} / ${lunaMonth?.toString()}`}
         </Text>
-        <View
-          style={[
-            extraDateStyle.fortuneDate,
-            {
-              backgroundColor
-            }
-          ]}
-        />
       </View>
     ) : null;
+  };
+
+  const renderGoodBad = () => {
+    const backgroundColorFortuneDate = fortuneDate === 'good' ? '#CF221A' : '#808080';
+    const backgroundColor = fortuneDate ? backgroundColorFortuneDate : undefined;
+    return (
+      <View
+        style={[
+          extraDateStyle.fortuneDate,
+          {
+            backgroundColor
+          }
+        ]}
+      />
+    );
   };
 
   const renderFullDate = () => {
@@ -193,6 +204,7 @@ const BasicDay = (props: BasicDayProps) => {
       <Fragment>
         {renderText()}
         {renderLunaDate()}
+        {renderGoodBad()}
       </Fragment>
     );
   };
@@ -203,6 +215,7 @@ const BasicDay = (props: BasicDayProps) => {
         {renderText()}
         {renderLunaDate()}
         {renderMarking()}
+        {renderGoodBad()}
       </Fragment>
     );
   };
@@ -211,25 +224,28 @@ const BasicDay = (props: BasicDayProps) => {
     const {activeOpacity} = _marking;
 
     return (
-      <TouchableOpacity
-        testID={testID}
-        style={getContainerStyle()}
-        disabled={shouldDisableTouchEvent()}
-        activeOpacity={activeOpacity}
-        onPress={!shouldDisableTouchEvent() ? _onPress : undefined}
-        onLongPress={!shouldDisableTouchEvent() ? _onLongPress : undefined}
-        accessible
-        accessibilityRole={isDisabled ? undefined : 'button'}
-        accessibilityLabel={accessibilityLabel}
-      >
-        {isMultiPeriod ? renderFullDate() : renderContent()}
-      </TouchableOpacity>
+      <View style={{padding: 2, borderLeftWidth: 1}}>
+        <TouchableOpacity
+          testID={testID}
+          // style={[getContainerStyle()]}
+          style={getContainerStyle()}
+          disabled={shouldDisableTouchEvent()}
+          activeOpacity={activeOpacity}
+          onPress={!shouldDisableTouchEvent() ? _onPress : undefined}
+          onLongPress={!shouldDisableTouchEvent() ? _onLongPress : undefined}
+          accessible
+          accessibilityRole={isDisabled ? undefined : 'button'}
+          accessibilityLabel={accessibilityLabel}
+        >
+          {isMultiPeriod ? renderFullDate() : renderContent()}
+        </TouchableOpacity>
+      </View>
     );
   };
 
   const renderPeriodsContainer = () => {
     return (
-      <View style={style.current.container}>
+      <View style={[style.current.container]}>
         {renderContainer()}
         {renderMarking()}
       </View>
@@ -245,8 +261,8 @@ const extraDateStyle = StyleSheet.create({
     height: 6,
     borderRadius: 6,
     position: 'absolute',
-    bottom: 0,
-    left: 18
+    top: 4,
+    left: 0
   },
   extraLunaTextFont: {
     fontSize: 10

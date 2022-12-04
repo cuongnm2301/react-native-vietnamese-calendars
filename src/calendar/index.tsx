@@ -204,7 +204,7 @@ const Calendar = (props: CalendarProps) => {
 
   const renderWeekNumber = (weekNumber: number) => {
     return (
-      <View style={style.current.dayContainer} key={`week-container-${weekNumber}`}>
+      <View style={[style.current.dayContainer]} key={`week-container-${weekNumber}`}>
         <BasicDay
           key={`week-${weekNumber}`}
           marking={weekNumberMarking.current}
@@ -227,7 +227,7 @@ const Calendar = (props: CalendarProps) => {
     }
 
     return (
-      <View style={style.current.dayContainer} key={id}>
+      <View style={[style.current.dayContainer]} key={id}>
         <Day
           {...dayProps}
           date={toMarkingFormat(day)}
@@ -252,7 +252,7 @@ const Calendar = (props: CalendarProps) => {
       week.unshift(renderWeekNumber(days[days.length - 1].getWeek()));
     }
     return (
-      <View style={[style.current.week]} key={id}>
+      <View style={[style.current.week, {borderBottomWidth: 1}]} key={id}>
         {week}
       </View>
     );
@@ -267,7 +267,7 @@ const Calendar = (props: CalendarProps) => {
       weeks.push(renderWeek(days.splice(0, 7), weeks.length));
     }
 
-    return <View style={style.current.monthView}>{weeks}</View>;
+    return <View style={[style.current.monthView]}>{weeks}</View>;
   };
 
   const shouldDisplayIndicator = useMemo(() => {

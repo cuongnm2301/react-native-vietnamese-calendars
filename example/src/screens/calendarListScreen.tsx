@@ -1,6 +1,6 @@
 import React, {useState, useMemo, useCallback} from 'react';
-import {StyleSheet, Text, View, TextStyle, Dimensions} from 'react-native';
-import {CalendarList, DateData, LocaleConfig} from 'react-native-calendars';
+import {StyleSheet, Text, View, TextStyle, Dimensions, Platform} from 'react-native';
+import {CalendarList, DateData, LocaleConfig} from 'react-native-vietnamese-calendars';
 import testIDs from '../testIDs';
 
 const RANGE = 24;
@@ -85,12 +85,20 @@ const CalendarListScreen = (props: Props) => {
   );
 };
 
+// const style = StyleSheet.create({
+//   a: {
+//     alignSelf
+//   }
+// })
+
 const theme = {
-  selectedDayBackgroundColor: 'rgba(227, 47, 39, 0.15)',
-  selectedDayTextColor: '#E32F27',
+  selectedDayBackgroundColor: 'rgba(227, 47, 39, 0.3)',
+  selectedDayTextColor: 'white',
+  textDayFontWeight: 'bold',
+  textDayFontSize: 18,
   arrowColor: '#222B45',
   textSectionTitleColor: '#55555B',
-  todayBackgroundColor: 'rgba(227, 47, 39, 0.15)',
+  todayBackgroundColor: 'rgba(227, 47, 39, 0.3)',
   todayTextColor: '#E32F27',
   'stylesheet.calendar.header': {
     arrow: {
