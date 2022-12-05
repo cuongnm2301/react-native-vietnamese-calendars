@@ -14,11 +14,11 @@ export default function styleConstructor(theme: Theme = {}) {
     },
     base: {
       width: SCREEN_WIDTH / 7 - 5,
-      height: SCREEN_WIDTH / 7,
+      height: SCREEN_WIDTH / 5,
       alignItems: 'center'
     },
     text: {
-      marginTop: SCREEN_WIDTH / 7 / 4,
+      marginTop: 4,
       fontSize: appStyle.textDayFontSize,
       fontFamily: appStyle.textDayFontFamily,
       fontWeight: appStyle.textDayFontWeight,

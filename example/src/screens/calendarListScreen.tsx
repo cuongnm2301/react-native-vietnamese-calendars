@@ -78,8 +78,14 @@ const CalendarListScreen = (props: Props) => {
       staticHeader={true}
       firstDay={1}
       fortuneDates={{
-        '22-09-2022': 'good',
-        '23-09-2022': 'bad'
+        '22-09-2022': {
+          type: 'good',
+          text: 'Nhâm Thân'
+        },
+        '23-09-2022': {
+          type: 'bad',
+          text: 'Canh Thìn'
+        }
       }}
     />
   );
@@ -100,6 +106,8 @@ const theme = {
   textSectionTitleColor: '#55555B',
   todayBackgroundColor: 'rgba(227, 47, 39, 0.3)',
   todayTextColor: '#E32F27',
+  textDayHeaderFontSize: 14,
+  textDayHeaderFontWeight: 'bold',
   'stylesheet.calendar.header': {
     arrow: {
       borderWidth: 1,

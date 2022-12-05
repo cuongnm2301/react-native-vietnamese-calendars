@@ -66,7 +66,7 @@ export interface CalendarProps extends CalendarHeaderProps, DayProps {
   /** Allow selection of dates before minDate or after maxDate */
   allowSelectionOutOfRange?: boolean;
   /** Map of fortune dates */
-  fortuneDates?: Record<string, 'good' | 'bad'>;
+  fortuneDates?: Record<string, object>;
 }
 
 /**

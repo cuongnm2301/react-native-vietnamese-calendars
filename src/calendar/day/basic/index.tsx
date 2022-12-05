@@ -32,7 +32,10 @@ export interface BasicDayProps extends ViewProps {
   /** Accessibility label */
   accessibilityLabel?: string;
   /** Fortune date label */
-  fortuneDate?: 'good' | 'bad';
+  fortuneDate?: {
+    type: 'good' | 'bad';
+    text: string;
+  };
 }
 
 const BasicDay = (props: BasicDayProps) => {
@@ -176,16 +179,29 @@ const BasicDay = (props: BasicDayProps) => {
     const lunaMonth = luneDate?.[1] || undefined;
 
     return lunaDay ? (
-      <View style={{position: 'absolute', bottom: 2}}>
-        <Text allowFontScaling={false} style={[style, extraDateStyle.extraLunaTextFont, getLunarTextStyle()]}>
-          {`${lunaDay.toString()} / ${lunaMonth?.toString()}`}
-        </Text>
-      </View>
+      <Text allowFontScaling={false} style={[style, extraDateStyle.extraLunaTextFont, getLunarTextStyle()]}>
+        {`${lunaDay.toString()}/${lunaMonth?.toString()}`}
+      </Text>
     ) : null;
   };
 
+  const renderDateDescription = () => {
+    const style = getTextStyle();
+
+    return (
+      <View style={extraDateStyle.lunarContainer}>
+        {fortuneDate?.text ? (
+          <Text allowFontScaling={false} style={[style, extraDateStyle.extraLunaTextFont, getLunarTextStyle()]}>
+            {fortuneDate?.text}
+          </Text>
+        ) : null}
+        {renderLunaDate()}
+      </View>
+    );
+  };
+
   const renderGoodBad = () => {
-    const backgroundColorFortuneDate = fortuneDate === 'good' ? '#CF221A' : '#808080';
+    const backgroundColorFortuneDate = fortuneDate?.type === 'good' ? '#CF221A' : '#808080';
     const backgroundColor = fortuneDate ? backgroundColorFortuneDate : undefined;
     return (
       <View
@@ -203,7 +219,7 @@ const BasicDay = (props: BasicDayProps) => {
     return (
       <Fragment>
         {renderText()}
-        {renderLunaDate()}
+        {renderDateDescription()}
         {renderGoodBad()}
       </Fragment>
     );
@@ -213,7 +229,7 @@ const BasicDay = (props: BasicDayProps) => {
     return (
       <Fragment>
         {renderText()}
-        {renderLunaDate()}
+        {renderDateDescription()}
         {renderMarking()}
         {renderGoodBad()}
       </Fragment>
@@ -224,7 +240,7 @@ const BasicDay = (props: BasicDayProps) => {
     const {activeOpacity} = _marking;
 
     return (
-      <View style={{padding: 2, borderLeftWidth: 1}}>
+      <View style={extraDateStyle.dayContainer}>
         <TouchableOpacity
           testID={testID}
           // style={[getContainerStyle()]}
@@ -257,16 +273,19 @@ const BasicDay = (props: BasicDayProps) => {
 
 const extraDateStyle = StyleSheet.create({
   fortuneDate: {
-    width: 6,
-    height: 6,
+    width: 12,
+    height: 12,
     borderRadius: 6,
     position: 'absolute',
     top: 4,
     left: 0
   },
   extraLunaTextFont: {
-    fontSize: 10
-  }
+    fontSize: 10,
+    textAlign: 'center'
+  },
+  dayContainer: {padding: 2, borderLeftWidth: 1},
+  lunarContainer: {position: 'absolute', bottom: 2}
 });
 
 export default BasicDay;
